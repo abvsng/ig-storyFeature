@@ -27,7 +27,7 @@ function StoryBox({ story }) {
     <>
       <div
         className={`border-4 rounded-full ${
-          story.viewed ? "border-gray-400" : "border-amber-400"
+          story.viewed ? "border-gray-400" : "border-cyan-600"
         }`}
       >
         <img
