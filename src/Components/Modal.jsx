@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalInVisible, setModalData } from "../Store/Slices/modalSlice.jsx";
 import { useEffect } from "react";
 import { stories } from "./stories.js";
-export default function Modal() {
+export default function Modal({ setLocalStories }) {
   const modalData = useSelector((state) => state.isModalOpen.modalData);
   const dispatch = useDispatch();
   const prevStory = () => {
@@ -18,11 +18,18 @@ export default function Modal() {
     dispatch(setModalData(stories[modalData.sno + 1]));
   };
   useEffect(() => {
+    setLocalStories((prevStories) =>
+      prevStories.map((story, index) =>
+        index === modalData.sno ? { ...story, viewed: true } : story
+      )
+    );
+
     let timer = setTimeout(() => {
       dispatch(modalInVisible());
-    }, 10000);
+    }, 5000);
+
     return () => clearTimeout(timer);
-  }, [dispatch, modalData]);
+  }, [dispatch, modalData, setLocalStories]);
   return (
     <>
       <div className="fixed top-0 left-0 w-screen h-screen z-50">

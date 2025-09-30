@@ -1,23 +1,27 @@
+import { useState } from "react";
 import { stories } from "./stories";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { modalVisible, setModalData } from "../Store/Slices/modalSlice.jsx";
 export default function Story() {
   const isModalOpen = useSelector((state) => state.isModalOpen.isModalOpen);
-
+  const [localStories, setLocalStories] = useState(stories);
   return (
     <>
-     <div className=" m-3 bg-slate-700 rounded-3xl p-3">
-       <div className=" w-full overflow-x-auto">
-        {" "}
-        <div className=" flex flex-row gap-2 w-max">
-          {stories.map((story, index) => (
-            <StoryBox story={story} key={index} />
-          ))}
+      <div className=" m-3 bg-slate-700 rounded-3xl p-3">
+        <div className=" w-full overflow-x-auto">
+          <div className=" flex flex-row gap-2 w-max">
+            {localStories.map((story, index) => (
+              <StoryBox story={story} key={index} />
+            ))}
+          </div>
+          {isModalOpen && (
+            <Modal
+              setLocalStories={setLocalStories}
+            />
+          )}
         </div>
-        {isModalOpen && <Modal />}
       </div>
-     </div>
     </>
   );
 }
